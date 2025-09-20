@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opentrustprotocol"
-version = "1.0.1"
+version = "1.0.2"
 authors = [
   { name="OpenTrust Protocol Team", email="contact@opentrustprotocol.com" },
 ]
@@ -32,5 +32,5 @@ classifiers = [
 [project.urls]
 Homepage = "https://opentrustprotocol.com"
 Documentation = "https://opentrustprotocol.com"
-Repository = "https://github.com/draxork/Neutrosophy"
+Repository = "https://github.com/draxork/opentrustprotocol"
 
