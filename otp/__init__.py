@@ -26,3 +26,5 @@ __all__ = ["NeutrosophicJudgment", "fuse"]
 
 # Define the package version
 __version__ = "1.0.3"
+
+// CI/CD Test - Sun Sep 21 04:35:51 -03 2025
