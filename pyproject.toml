@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opentrustprotocol"
-version = "1.0.4"
+version = "1.0.5"
 authors = [
   { name="OpenTrust Protocol Team", email="contact@opentrustprotocol.com" },
 ]
