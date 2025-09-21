@@ -7,12 +7,13 @@ standard representation of evidence with its Truth (T), Indeterminacy (I),
 and Falsity (F) components, along with its audit trail (provenance_chain).
 """
 
-from dataclasses import dataclass, field
-from typing import List, Dict, Any
 import datetime
+from dataclasses import dataclass, field
+from typing import Any, Dict, List
 
 # Define a type alias for the provenance chain for clarity.
 ProvenanceChain = List[Dict[str, Any]]
+
 
 @dataclass(frozen=True)
 class NeutrosophicJudgment:
@@ -29,6 +30,7 @@ class NeutrosophicJudgment:
         provenance_chain (ProvenanceChain): A list of dictionaries documenting
             the origin and history of the judgment.
     """
+
     T: float
     I: float
     F: float
@@ -45,25 +47,27 @@ class NeutrosophicJudgment:
             raise ValueError(f"I value must be between 0 and 1, but got {self.I}")
         if not (0.0 <= self.F <= 1.0):
             raise ValueError(f"F value must be between 0 and 1, but got {self.F}")
-        
+
         # Conservation constraint validation
         if self.T + self.I + self.F > 1.0:
-            raise ValueError(f"Conservation constraint violated: T + I + F > 1.0 (got {self.T + self.I + self.F:.2f})")
-        
+            raise ValueError(
+                f"Conservation constraint violated: T + I + F > 1.0 (got {self.T + self.I + self.F:.2f})"
+            )
+
         # Provenance chain validation
         if not isinstance(self.provenance_chain, list):
             raise TypeError("provenance_chain must be a list of dictionaries.")
-        
+
         if len(self.provenance_chain) == 0:
             raise ValueError("Provenance chain cannot be empty")
-        
+
         # Validate provenance entries
         for i, entry in enumerate(self.provenance_chain):
             if not isinstance(entry, dict):
                 raise TypeError(f"Provenance entry {i} must be a dictionary")
-            if 'source_id' not in entry or not entry['source_id']:
+            if "source_id" not in entry or not entry["source_id"]:
                 raise ValueError(f"Provenance entry {i} must have source_id")
-            if 'timestamp' not in entry or not entry['timestamp']:
+            if "timestamp" not in entry or not entry["timestamp"]:
                 raise ValueError(f"Provenance entry {i} must have timestamp")
 
     def __repr__(self) -> str:
@@ -73,16 +77,16 @@ class NeutrosophicJudgment:
         return f"NeutrosophicJudgment(T={self.T:.2f}, I={self.I:.2f}, F={self.F:.2f})"
 
     @classmethod
-    def from_dict(cls, data: Dict[str, Any]) -> 'NeutrosophicJudgment':
+    def from_dict(cls, data: Dict[str, Any]) -> "NeutrosophicJudgment":
         """
         Creates a NeutrosophicJudgment instance from a dictionary.
         Useful for deserializing data (e.g., from JSON).
         """
         return cls(
-            T=data.get('T', 0.0),
-            I=data.get('I', 0.0),
-            F=data.get('F', 0.0),
-            provenance_chain=data.get('provenance_chain', [])
+            T=data.get("T", 0.0),
+            I=data.get("I", 0.0),
+            F=data.get("F", 0.0),
+            provenance_chain=data.get("provenance_chain", []),
         )
 
     def to_dict(self) -> Dict[str, Any]:
@@ -94,6 +98,5 @@ class NeutrosophicJudgment:
             "T": self.T,
             "I": self.I,
             "F": self.F,
-            "provenance_chain": self.provenance_chain
+            "provenance_chain": self.provenance_chain,
         }
-

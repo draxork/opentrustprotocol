@@ -15,17 +15,14 @@ Core Components:
 For more information, please visit the official documentation at https://opentrustprotocol.com
 """
 
+from . import fuse
+
 # Import the main components to make them easily accessible
 # to the end-user via `from otp import ...`
 from .judgment import NeutrosophicJudgment
-from . import fuse
 
 # Define what is exported when a user does `from otp import *`
-__all__ = [
-    'NeutrosophicJudgment',
-    'fuse'
-]
+__all__ = ["NeutrosophicJudgment", "fuse"]
 
 # Define the package version
 __version__ = "1.0.3"
-

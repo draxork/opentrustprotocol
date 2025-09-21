@@ -48,7 +48,7 @@ jobs:
       run: black --check otp/
     
     - name: Check import sorting with isort
-      run: isort --check-only otp/
+      run: isort --check-only --profile black otp/
     
     - name: Build package
       run: python -m build
