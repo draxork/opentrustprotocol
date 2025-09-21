@@ -20,13 +20,20 @@ from . import fuse
 # Import the main components to make them easily accessible
 # to the end-user via `from otp import ...`
 from .judgment import NeutrosophicJudgment
+from .fuse import (
+    conflict_aware_weighted_average,
+    optimistic_fusion,
+    pessimistic_fusion,
+)
 
 # Define what is exported when a user does `from otp import *`
-__all__ = ["NeutrosophicJudgment", "fuse"]
+__all__ = [
+    "NeutrosophicJudgment",
+    "fuse",
+    "conflict_aware_weighted_average",
+    "optimistic_fusion",
+    "pessimistic_fusion",
+]
 
 # Define the package version
 __version__ = "1.0.3"
-
-// CI/CD Test - Sun Sep 21 04:35:51 -03 2025
-
-# CI/CD Test - Sun Sep 21 09:45:20 -03 2025
