@@ -61,8 +61,9 @@ def conflict_aware_weighted_average(
     # Build the new provenance chain
     new_provenance = [item for j in judgments for item in j.provenance_chain]
     new_provenance.append({
-        "operator_id": "otp-cawa-v1.1",
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
+        "source_id": "otp-cawa-v1.1",
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "description": "Conflict-aware weighted average fusion operation"
     })
 
     return NeutrosophicJudgment(T=final_t, I=final_i, F=final_f, provenance_chain=new_provenance)
@@ -85,10 +86,19 @@ def optimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJudg
     final_f = min(j.F for j in judgments)
     final_i = sum(j.I for j in judgments) / len(judgments)
 
+    # Ensure conservation constraint is satisfied
+    total = final_t + final_i + final_f
+    if total > 1.0:
+        # Scale down proportionally to maintain relative relationships
+        final_t = final_t / total
+        final_i = final_i / total
+        final_f = final_f / total
+
     new_provenance = [item for j in judgments for item in j.provenance_chain]
     new_provenance.append({
-        "operator_id": "otp-optimistic-v1.1",
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
+        "source_id": "otp-optimistic-v1.1",
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "description": "Optimistic fusion operation"
     })
 
     return NeutrosophicJudgment(T=final_t, I=final_i, F=final_f, provenance_chain=new_provenance)
@@ -111,10 +121,19 @@ def pessimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJud
     final_f = max(j.F for j in judgments)
     final_i = sum(j.I for j in judgments) / len(judgments)
 
+    # Ensure conservation constraint is satisfied
+    total = final_t + final_i + final_f
+    if total > 1.0:
+        # Scale down proportionally to maintain relative relationships
+        final_t = final_t / total
+        final_i = final_i / total
+        final_f = final_f / total
+
     new_provenance = [item for j in judgments for item in j.provenance_chain]
     new_provenance.append({
-        "operator_id": "otp-pessimistic-v1.1",
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat()
+        "source_id": "otp-pessimistic-v1.1",
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        "description": "Pessimistic fusion operation"
     })
 
     return NeutrosophicJudgment(T=final_t, I=final_i, F=final_f, provenance_chain=new_provenance)

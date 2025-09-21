@@ -38,14 +38,33 @@ class NeutrosophicJudgment:
         """
         Performs validation checks after the object has been initialized.
         """
+        # Range validation
         if not (0.0 <= self.T <= 1.0):
             raise ValueError(f"T value must be between 0 and 1, but got {self.T}")
         if not (0.0 <= self.I <= 1.0):
             raise ValueError(f"I value must be between 0 and 1, but got {self.I}")
         if not (0.0 <= self.F <= 1.0):
             raise ValueError(f"F value must be between 0 and 1, but got {self.F}")
+        
+        # Conservation constraint validation
+        if self.T + self.I + self.F > 1.0:
+            raise ValueError(f"Conservation constraint violated: T + I + F > 1.0 (got {self.T + self.I + self.F:.2f})")
+        
+        # Provenance chain validation
         if not isinstance(self.provenance_chain, list):
             raise TypeError("provenance_chain must be a list of dictionaries.")
+        
+        if len(self.provenance_chain) == 0:
+            raise ValueError("Provenance chain cannot be empty")
+        
+        # Validate provenance entries
+        for i, entry in enumerate(self.provenance_chain):
+            if not isinstance(entry, dict):
+                raise TypeError(f"Provenance entry {i} must be a dictionary")
+            if 'source_id' not in entry or not entry['source_id']:
+                raise ValueError(f"Provenance entry {i} must have source_id")
+            if 'timestamp' not in entry or not entry['timestamp']:
+                raise ValueError(f"Provenance entry {i} must have timestamp")
 
     def __repr__(self) -> str:
         """
