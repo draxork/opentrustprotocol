@@ -1,4 +1,4 @@
-# OpenTrust Protocol (OTP) SDK
+# OpenTrust Protocol (OTP) Python SDK
 
 [![PyPI version](https://badge.fury.io/py/opentrustprotocol.svg)](https://badge.fury.io/py/opentrustprotocol)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
