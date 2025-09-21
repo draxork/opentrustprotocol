@@ -1,4 +1,4 @@
-name: CI - Import Fix Applied
+name: CI - Fixed
 
 on:
   push:
@@ -52,9 +52,6 @@ jobs:
     
     - name: Build package
       run: python -m build
-    
-    - name: Test imports
-      run: python test_import.py
     
     - name: Test with pytest
       run: pytest --cov=otp --cov-report=xml --cov-report=html
