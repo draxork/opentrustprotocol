@@ -1,0 +1,44 @@
+name: Quick Import Test
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  quick-test:
+    name: Quick Import Test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+    
+    - name: Install package in development mode
+      run: |
+        pip install -e .
+    
+    - name: Test basic import
+      run: |
+        python -c "from otp import NeutrosophicJudgment; print('✅ NeutrosophicJudgment import successful')"
+    
+    - name: Test fusion function imports
+      run: |
+        python -c "from otp import conflict_aware_weighted_average; print('✅ conflict_aware_weighted_average import successful')"
+        python -c "from otp import optimistic_fusion; print('✅ optimistic_fusion import successful')"
+        python -c "from otp import pessimistic_fusion; print('✅ pessimistic_fusion import successful')"
+    
+    - name: Test all imports together
+      run: |
+        python -c "
+        from otp import NeutrosophicJudgment, conflict_aware_weighted_average, optimistic_fusion, pessimistic_fusion
+        print('🎉 All imports successful!')
+        print(f'Version: {__import__(\"otp\").__version__}')
+        "
+    
+    - name: Run comprehensive import test
+      run: python test_import.py
