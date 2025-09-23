@@ -66,4 +66,4 @@ venv.bak/
 Thumbs.db
 
 # Logs
-*.log
+*.log.pypirc
