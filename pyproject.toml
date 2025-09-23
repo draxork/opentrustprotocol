@@ -4,15 +4,15 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "opentrustprotocol"
-version = "2.0.0"
+version = "3.0.0"
 authors = [
   { name="OpenTrust Protocol Team", email="contact@opentrustprotocol.com" },
 ]
-description = "🐍 Official Python SDK for OpenTrust Protocol - The mathematical embodiment of trust itself. Features neutrosophic judgments, fusion operators, OTP mappers, and REVOLUTIONARY Conformance Seals with mathematical proof of conformance."
+description = "🐍 Official Python SDK for OpenTrust Protocol - The mathematical embodiment of trust itself. Features neutrosophic judgments, fusion operators, OTP mappers, REVOLUTIONARY Conformance Seals, and Performance Oracle with Circle of Trust for real-world outcome tracking."
 readme = "README.md"
 requires-python = ">=3.8"
 license = { file = "LICENSE" }
-keywords = ["neutrosophy", "neutrosophic", "uncertainty", "trust", "audit", "ai", "otp", "conformance-seal", "cryptography", "proof"]
+keywords = ["neutrosophy", "neutrosophic", "uncertainty", "trust", "audit", "ai", "otp", "conformance-seal", "cryptography", "proof", "performance-oracle", "circle-of-trust", "outcome-tracking"]
 classifiers = [
     "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",

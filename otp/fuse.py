@@ -2,9 +2,13 @@
 """
 fuse.py - Implementation of the OpenTrust Protocol fusion operators.
 
-**REVOLUTIONARY UPDATE**: All fusion operations now generate **Conformance Seals**
-that provide mathematical proof that the operation was performed according to
-the exact OTP specification. This transforms OTP into the mathematical embodiment of trust.
+**REVOLUTIONARY UPDATE**: All fusion operations now generate:
+- **Conformance Seals**: Mathematical proof that the operation was performed according to
+  the exact OTP specification
+- **Judgment IDs**: Unique identifiers for Circle of Trust tracking and Performance Oracle
+
+This transforms OTP into the mathematical embodiment of trust itself, enabling
+real-world outcome tracking and performance measurement.
 
 This module contains the standard functions for combining multiple
 Neutrosophic Judgments into a single, aggregated judgment with cryptographic proof.
@@ -15,6 +19,7 @@ from typing import List, Optional
 
 from .judgment import NeutrosophicJudgment
 from .conformance import generate_conformance_seal, create_fusion_provenance_entry
+from .judgment_id import ensure_judgment_id
 
 
 def _validate_inputs(
@@ -43,21 +48,23 @@ def conflict_aware_weighted_average(
     Fuses a list of judgments using the conflict-aware weighted average.
     This is the primary and recommended operator in OTP.
 
-    **REVOLUTIONARY**: This function now automatically generates a Conformance Seal
-    that provides mathematical proof the operation was performed according to OTP specification.
+    **REVOLUTIONARY**: The fused judgment automatically includes:
+    - **Conformance Seal**: Mathematical proof of specification compliance
+    - **Judgment ID**: Unique identifier for Circle of Trust tracking
 
     Args:
         judgments: A list of NeutrosophicJudgment objects to fuse.
         weights: A list of numeric weights corresponding to each judgment.
 
     Returns:
-        A new NeutrosophicJudgment object representing the fused judgment with Conformance Seal.
+        A new NeutrosophicJudgment object representing the fused judgment with
+        automatic Conformance Seal and Judgment ID generation.
 
     Example:
         >>> judgment1 = NeutrosophicJudgment(0.8, 0.2, 0.0, [{"source_id": "sensor1"}])
         >>> judgment2 = NeutrosophicJudgment(0.6, 0.3, 0.1, [{"source_id": "sensor2"}])
         >>> fused = conflict_aware_weighted_average([judgment1, judgment2], [0.6, 0.4])
-        >>> # The fused judgment now contains a Conformance Seal
+        >>> # The fused judgment now contains a Conformance Seal and Judgment ID
         >>> seal = fused.provenance_chain[-1]["conformance_seal"]
         >>> print(f"🔐 Conformance Seal: {seal}")
     """
@@ -114,15 +121,19 @@ def conflict_aware_weighted_average(
             "operator": "conflict_aware_weighted_average",
             "input_count": len(judgments),
             "weights": weights,
-            "version": "2.0.0"
+            "version": "3.0.0"
         }
     )
     
     new_provenance.append(fusion_entry)
 
-    return NeutrosophicJudgment(
+    # Create the fused judgment
+    fused_judgment = NeutrosophicJudgment(
         T=final_t, I=final_i, F=final_f, provenance_chain=new_provenance
     )
+    
+    # **REVOLUTIONARY**: Ensure the judgment has a unique ID for Circle of Trust
+    return ensure_judgment_id(fused_judgment)
 
 
 def optimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJudgment:
@@ -130,14 +141,16 @@ def optimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJudg
     Fuses judgments by prioritizing the maximum T value and the minimum F value.
     Useful for opportunity analysis or "best-case" scenarios.
 
-    **REVOLUTIONARY**: This function now automatically generates a Conformance Seal
-    that provides mathematical proof the operation was performed according to OTP specification.
+    **REVOLUTIONARY**: The fused judgment automatically includes:
+    - **Conformance Seal**: Mathematical proof of specification compliance
+    - **Judgment ID**: Unique identifier for Circle of Trust tracking
 
     Args:
         judgments: A list of NeutrosophicJudgment objects.
 
     Returns:
-        A new NeutrosophicJudgment with the max T, min F, and average I, including Conformance Seal.
+        A new NeutrosophicJudgment with the max T, min F, and average I,
+        plus automatic Conformance Seal and Judgment ID generation.
     """
     _validate_inputs(judgments)
 
@@ -175,15 +188,19 @@ def optimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJudg
             "operator": "optimistic_fusion",
             "input_count": len(judgments),
             "weights": equal_weights,
-            "version": "2.0.0"
+            "version": "3.0.0"
         }
     )
     
     new_provenance.append(fusion_entry)
 
-    return NeutrosophicJudgment(
+    # Create the fused judgment
+    fused_judgment = NeutrosophicJudgment(
         T=final_t, I=final_i, F=final_f, provenance_chain=new_provenance
     )
+    
+    # **REVOLUTIONARY**: Ensure the judgment has a unique ID for Circle of Trust
+    return ensure_judgment_id(fused_judgment)
 
 
 def pessimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJudgment:
@@ -191,14 +208,16 @@ def pessimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJud
     Fuses judgments by prioritizing the maximum F value and the minimum T value.
     Indispensable for risk analysis or "worst-case" scenarios.
 
-    **REVOLUTIONARY**: This function now automatically generates a Conformance Seal
-    that provides mathematical proof the operation was performed according to OTP specification.
+    **REVOLUTIONARY**: The fused judgment automatically includes:
+    - **Conformance Seal**: Mathematical proof of specification compliance
+    - **Judgment ID**: Unique identifier for Circle of Trust tracking
 
     Args:
         judgments: A list of NeutrosophicJudgment objects.
 
     Returns:
-        A new NeutrosophicJudgment with the max F, min T, and average I, including Conformance Seal.
+        A new NeutrosophicJudgment with the max F, min T, and average I,
+        plus automatic Conformance Seal and Judgment ID generation.
     """
     _validate_inputs(judgments)
 
@@ -236,12 +255,16 @@ def pessimistic_fusion(judgments: List[NeutrosophicJudgment]) -> NeutrosophicJud
             "operator": "pessimistic_fusion",
             "input_count": len(judgments),
             "weights": equal_weights,
-            "version": "2.0.0"
+            "version": "3.0.0"
         }
     )
     
     new_provenance.append(fusion_entry)
 
-    return NeutrosophicJudgment(
+    # Create the fused judgment
+    fused_judgment = NeutrosophicJudgment(
         T=final_t, I=final_i, F=final_f, provenance_chain=new_provenance
     )
+    
+    # **REVOLUTIONARY**: Ensure the judgment has a unique ID for Circle of Trust
+    return ensure_judgment_id(fused_judgment)
