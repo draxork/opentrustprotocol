@@ -5,13 +5,18 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python](https://img.shields.io/badge/python-3.8%2B-blue.svg)](https://www.python.org)
 
-## 🌟 **REVOLUTIONARY UPDATE: v2.0.0 - Conformance Seals**
+## 🌟 **REVOLUTIONARY UPDATE: v3.0.0 - Performance Oracle & Circle of Trust**
 
-**OTP v2.0 introduces the Zero Pillar: Proof-of-Conformance Seals**
+**OTP v3.0 introduces:**
+- **Zero Pillar**: Proof-of-Conformance Seals (cryptographic proof of specification compliance)
+- **First Pillar**: Performance Oracle (Circle of Trust for real-world outcome tracking)
 
 Every fusion operation now generates a cryptographic fingerprint (SHA-256 hash) that proves
-the operation was performed according to the exact OTP specification. This transforms OTP
-from a trust protocol into **the mathematical embodiment of trust itself**.
+the operation was performed according to the exact OTP specification. Additionally, the 
+Performance Oracle system enables tracking real-world outcomes to measure the effectiveness 
+of OTP-based decisions.
+
+This transforms OTP from a trust protocol into **the mathematical embodiment of trust itself**.
 
 > **The official Python implementation of the OpenTrust Protocol - The mathematical embodiment of trust itself**
 
